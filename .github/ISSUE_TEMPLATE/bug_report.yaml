@@ -1,5 +1,5 @@
 name: 不具合・タイポ報告 (Bug/Typo Report)
-about: ソフトウェアの不具合や誤字脱字を報告します。(Report software bugs or typos.)
+description: ソフトウェアの不具合や誤字脱字を報告します。(Report software bugs or typos.)
 
 title: "[不具合/タイポ/Bug/Typo]: 課題のタイトル (Issue Title)"
 labels:
