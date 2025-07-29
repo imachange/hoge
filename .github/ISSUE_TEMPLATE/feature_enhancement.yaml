@@ -1,5 +1,5 @@
 name: 機能追加・改善提案 (Feature Addition/Improvement Proposal)
-about: 新しい機能の提案や既存機能の改善を提案します。(Propose new features or improvements to existing ones.)
+description: 新しい機能の提案や既存機能の改善を提案します。(Propose new features or improvements to existing ones.)
 
 title: "[提案/Proposal]: 課題のタイトル (Issue Title)"
 labels:
