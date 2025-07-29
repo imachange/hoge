@@ -1,0 +1,115 @@
+name: 不具合・タイポ報告 (Bug/Typo Report)
+about: ソフトウェアの不具合や誤字脱字を報告します。(Report software bugs or typos.)
+
+title: "[不具合/タイポ/Bug/Typo]: 課題のタイトル (Issue Title)"
+labels:
+  - "状態: 下書き (Status: Draft)"
+  - "優先度: 中 (Priority: Medium)" # 初期値として中を設定 (Set to medium as initial value)
+assignees: # 必要に応じてデフォルトのアサインeeを設定 (Set default assignees as needed)
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 問題の詳細 (Issue Details)
+
+        このテンプレートを使用して、発生している不具合またはタイポを報告してください。(Use this template to report a bug or typo you are experiencing.)
+        以下の項目を埋めて、問題の特定と解決に役立ててください。(Fill in the following items to help identify and resolve the issue.)
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: 問題の種類 (Type of Issue)
+      description: 報告する問題の種類を選択してください。(Select the type of issue you are reporting.)
+      options:
+        - "不具合 (Bug)"
+        - "タイポ (Typo)"
+      default: 0 # 不具合をデフォルトに設定 (Set Bug as default)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 説明 (Description)
+      description: どのような問題が発生していますか？ (What kind of issue are you experiencing?)
+      placeholder: 問題の概要を簡潔に記述してください。(Briefly describe the issue.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 問題の場所・再現手順 (Location of Issue / Steps to Reproduce)
+      description: |
+        問題（不具合またはタイポ）を特定・再現するための具体的な手順や場所を記述してください。
+        (Describe specific steps or location to identify/reproduce the issue (bug or typo).)
+        例:
+        - 不具合の場合: 1. ... 2. ... 3. ...
+        - タイポの場合: [ファイル名/ページ名]の[セクション名/行番号]、またはURL
+      placeholder: |
+        例:
+        - 不具合:
+          1. ログインページにアクセス
+          2. 誤ったパスワードを入力してログインボタンをクリック
+          3. エラーメッセージが表示されない
+        - タイポ:
+          README.mdの「はじめに」セクション、3行目
+          または https://example.com/docs/getting-started
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 期待される動作・正しい状態 (Expected Behavior / Correct State)
+      description: 問題が解決された場合に期待される動作や、正しい状態を記述してください。(Describe the expected behavior or correct state once the issue is resolved.)
+      placeholder: |
+        例:
+        - 不具合: エラーメッセージが表示されるべき
+        - タイポ: 「誤字」ではなく「ごじ」と表示されるべき
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: 実際の動作・現在の状態 (Actual Behavior / Current State)
+      description: 現在発生している動作や、見つかった誤った箇所を記述してください。(Describe the current behavior or the incorrect part found.)
+      placeholder: |
+        例:
+        - 不具合: エラーメッセージが表示されない
+        - タイポ: 「ごじ」と表示されている
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-correction
+    attributes:
+      label: 提案する修正 (タイポの場合) (Suggested Correction (for typos))
+      description: タイポの場合、具体的な修正案を記述してください。(If it's a typo, please provide the specific correction.)
+      placeholder: 例: 「ごじ」を「誤字」に修正
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 環境情報 (Environment Information)
+      description: |
+        問題が発生した環境について記述してください。(Describe the environment where the issue occurred.)
+        例:
+        - OS: Windows 10 / macOS Sonoma
+        - Obsidianバージョン: 1.5.8
+        - 使用しているプラグイン: (もしあれば) (Plugins used: (if any))
+      placeholder: 環境情報を記述してください。(Describe the environment information.)
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト (Checklist)
+      options:
+        - label: 関連する既存の課題やプルリクエストを確認しました。(I have checked for related existing issues or pull requests.)
+          required: false

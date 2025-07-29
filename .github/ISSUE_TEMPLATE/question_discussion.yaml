@@ -1,0 +1,55 @@
+name: 質問・検討課題 (Question/Discussion)
+about: 質問や、今後対応するか検討したい課題を作成します。(Create issues for questions or topics to be considered for future action.)
+
+title: "[質問/検討/Question/Consideration]: 課題のタイトル (Issue Title)"
+labels:
+  - "状態: 下書き (Status: Draft)"
+  - "優先度: 低 (Priority: Low)" # 初期値として低を設定 (Set to low as initial value)
+assignees: # 必要に応じてデフォルトのアサインeeを設定 (Set default assignees as needed)
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 質問・検討課題の詳細 (Question/Discussion Details)
+
+        このテンプレートを使用して、質問や、今後対応するか検討したい課題を作成してください。(Use this template to create issues for questions or topics to be considered for future action.)
+        以下の項目を埋めて、内容を明確にしてください。(Fill in the following items to clarify the content.)
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 種類 (Type)
+      description: この課題の種類を選択してください。(Select the type of this issue.)
+      options:
+        - "種類: 質問 (Type: Question)"
+        - "種類: 検討課題 (Type: Consideration)"
+      default: 0 # "種類: 質問" をデフォルトに設定 (Set "Type: Question" as default)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 質問内容または検討したい課題の詳細 (Question or Detailed Description of Topic to Consider)
+      description: 具体的な質問内容や、検討したい課題の背景・論点などを記述してください。(Describe the specific question or the background/points of the topic to consider.)
+      placeholder: 詳細を記述してください。(Describe the details.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 関連する背景情報や試したこと (Related Context or What Has Been Tried)
+      description: 質問に至った背景、これまでに試したこと、参考にした情報などがあれば記述してください。(Describe the background leading to the question, what has been tried, and any reference information.)
+      placeholder: 背景情報や試したことを記述してください。(Describe the context or what has been tried.)
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト (Checklist)
+      options:
+        - label: 関連する既存の課題やプルリクエストを確認しました。(I have checked for related existing issues or pull requests.)
+          required: false

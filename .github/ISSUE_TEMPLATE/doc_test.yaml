@@ -1,0 +1,55 @@
+name: ドキュメント・テスト関連 (Documentation/Test Related)
+about: ドキュメントの更新やテストに関する課題を作成します。(Create issues related to documentation updates or testing.)
+
+title: "[ドキュメント/テスト/Doc/Test]: 課題のタイトル (Issue Title)"
+labels:
+  - "状態: 下書き (Status: Draft)"
+  - "優先度: 低 (Priority: Low)" # 初期値として低を設定 (Set to low as initial value)
+assignees: # 必要に応じてデフォルトのアサインeeを設定 (Set default assignees as needed)
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ドキュメント・テスト関連の詳細 (Documentation/Test Related Details)
+
+        このテンプレートを使用して、ドキュメントの更新やテストに関する課題を作成してください。(Use this template to create issues related to documentation updates or testing.)
+        以下の項目を埋めて、内容を明確にしてください。(Fill in the following items to clarify the content.)
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 種類 (Type)
+      description: この課題の種類を選択してください。(Select the type of this issue.)
+      options:
+        - "種類: ドキュメント (Type: Documentation)"
+        - "種類: テスト (Type: Test)"
+      default: 0 # "種類: ドキュメント" をデフォルトに設定 (Set "Type: Documentation" as default)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 変更内容の概要 (Overview of Changes)
+      description: ドキュメントの追加・修正内容や、テストの目的・範囲などを記述してください。(Describe the content of documentation additions/modifications, or the purpose/scope of tests.)
+      placeholder: 変更内容の概要を記述してください。(Describe the overview of changes.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: target-area
+    attributes:
+      label: 対象となるファイルや領域 (Target Files or Areas)
+      description: どのドキュメントファイル、またはどの機能のテストに関連しますか？(Which documentation files or functional tests are related?)
+      placeholder: 例: README.md, `src/utils/`配下のテスト (e.g., README.md, tests under `src/utils/`)
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト (Checklist)
+      options:
+        - label: 関連する既存の課題やプルリクエストを確認しました。(I have checked for related existing issues or pull requests.)
+          required: false

@@ -1,0 +1,147 @@
+name: テンプレートリポジトリ初期化
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  template-cleanup:
+    if: github.repository != 'imachange/boilerplate'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Node.jsをセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: pnpmをインストール
+        uses: pnpm/action-setup@v4
+        # with:
+        #   version: latest # package.jsonのpackageManagerと競合するため削除
+
+      - name: jqがインストールされていることを確認
+        run: |
+          if ! command -v jq &> /dev/null
+          then
+              echo "jq が見つかりません。インストールします。"
+              sudo apt-get update && sudo apt-get install -y jq
+          else
+              echo "jq はすでにインストールされています。"
+          fi
+
+      - name: リポジトリ情報を取得
+        id: repo-info
+        run: |
+          echo "repo_name=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+          echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> $GITHUB_OUTPUT
+
+      - name: package.jsonを新しいリポジトリ情報で更新
+        run: |
+          if [ -f package.json ]; then
+            jq --arg name "${{ steps.repo-info.outputs.repo_name }}" \
+               --arg repo "https://github.com/${{ github.repository }}" \
+               '.name = $name | .repository.url = $repo' package.json > package.json.tmp
+            
+            mv package.json.tmp package.json
+          fi
+
+      - name: 初期ラベルを作成
+        run: |
+          if [ -f .github/labels.json ]; then
+            echo "Creating repository labels..."
+            # 既存ラベルのリストを取得。権限がない場合はエラーメッセージが出力されるが、スクリプトは継続。
+            # エラーメッセージに "Resource not accessible by integration" が含まれる場合、権限不足と判断。
+            existing_labels_output=$(gh label list --json name -q '.[].name' 2>&1 || true)
+            
+            if echo "$existing_labels_output" | grep -q "Resource not accessible by integration"; then
+              echo "警告: ラベルの読み取り権限がないため、既存ラベルの確認をスキップします。新しいラベルの作成を試みますが、重複する可能性があります。"
+              existing_labels="" # 権限エラーの場合は既存ラベルを空とみなす
+            else
+              existing_labels="$existing_labels_output"
+            fi
+
+            cat .github/labels.json | jq -r '.[] | "\(.name)|\(.color)|\(.description // "")"' | while IFS='|' read -r name color description; do
+              if [ -n "$name" ]; then
+                if echo "$existing_labels" | grep -Fxq "$name"; then
+                  echo "ラベル '$name' は既に存在します。作成をスキップします。"
+                else
+                  echo "ラベルを作成中: $name"
+                  # gh label create が失敗した場合、エラーメッセージを出力し、スクリプトは継続
+                  gh label create "$name" --color "$color" --description "$description" 2>&1 || echo "エラー: ラベル '$name' の作成に失敗しました。権限不足の可能性があります。"
+                fi
+              fi
+            done
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: package.jsonのnameをリポジトリ名に変更
+        run: |
+          if [ -f package.json ]; then
+            repo_name="${GITHUB_REPOSITORY#*/}"
+            jq --arg name "$repo_name" '.name = $name' package.json > package.json.tmp
+            mv package.json.tmp package.json
+          fi
+
+      - name: 依存関係をインストール
+        run: |
+          if [ -f package.json ]; then
+            pnpm install
+          fi
+
+      - name: このワークフローファイルを削除
+        run: |
+          rm -f .github/workflows/template-cleanup.yml
+
+      - name: 変更をコミットしてプッシュ
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git add .
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "🎉 プロジェクトをテンプレートから初期化しました
+
+            - package.jsonをリポジトリ情報で更新
+            - 初期プロジェクト構造を作成
+            - リポジトリラベルを設定
+            - テンプレート初期化ワークフローを削除"
+            
+            git push
+          else
+            echo "コミットする変更はありません"
+          fi
+
+      - name: 初期Issueを作成
+        run: |
+          # 初期設定完了のissueを作成
+          gh issue create \
+            --title "🎉 プロジェクトが正常に初期化されました" \
+            --body "テンプレートからの初期化が完了しました。
+
+          ## 完了した作業
+          - ✅ プロジェクト構造の作成
+          - ✅ package.jsonの更新
+          - ✅ リポジトリラベルの設定
+          - ✅ 依存関係のインストール
+
+          ## 次のステップ
+          1. README.mdを作成してプロジェクトの詳細を記載
+          2. 必要に応じて依存関係を追加
+          3. プロジェクトの開発を開始
+
+          このIssueは確認後に閉じていただけます。" \
+            --label "種類: 新規" 2>&1 || echo "エラー: 初期Issueの作成に失敗しました。権限不足の可能性があります。"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

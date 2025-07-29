@@ -1,0 +1,66 @@
+name: 機能追加・改善提案 (Feature Addition/Improvement Proposal)
+about: 新しい機能の提案や既存機能の改善を提案します。(Propose new features or improvements to existing ones.)
+
+title: "[提案/Proposal]: 課題のタイトル (Issue Title)"
+labels:
+  - "状態: 下書き (Status: Draft)"
+  - "優先度: 中 (Priority: Medium)" # 初期値として中を設定 (Set to medium as initial value)
+assignees: # 必要に応じてデフォルトのアサインeeを設定 (Set default assignees as needed)
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 機能追加・改善提案の詳細 (Feature Addition/Improvement Proposal Details)
+
+        このテンプレートを使用して、新しい機能の提案や既存機能の改善を提案してください。(Use this template to propose new features or improvements to existing ones.)
+        以下の項目を埋めて、提案内容を明確にしてください。(Fill in the following items to clarify your proposal.)
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 種類 (Type)
+      description: この課題の種類を選択してください。(Select the type of this issue.)
+      options:
+        - "種類: 新規 (Type: New Feature)"
+        - "種類: 追加 (Type: Addition)"
+        - "種類: 改善 (Type: Improvement)"
+      default: 0 # "種類: 新規" をデフォルトに設定 (Set "Type: New Feature" as default)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 現状の問題点や背景 (Current Problems or Background)
+      description: 現在どのような問題があり、なぜこの機能や改善が必要だと考えますか？ (What current problems exist, and why do you think this feature or improvement is necessary?)
+      placeholder: 問題点や背景を記述してください。(Describe the problems or background.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 提案する解決策や機能 (Proposed Solution or Feature)
+      description: どのような機能を追加したいですか？ または、どのように改善したいですか？ (What feature do you want to add? Or how do you want to improve it?)
+      placeholder: 具体的な提案内容を記述してください。(Describe the specific proposal.)
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: この変更によって得られるメリット (Benefits of This Change)
+      description: この機能追加や改善がもたらすメリットや効果を記述してください。(Describe the benefits or effects that this feature addition or improvement will bring.)
+      placeholder: メリットを記述してください。(Describe the benefits.)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト (Checklist)
+      options:
+        - label: 関連する既存の課題やプルリクエストを確認しました。(I have checked for related existing issues or pull requests.)
+          required: false
+
