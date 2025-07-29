@@ -88,7 +88,7 @@ body:
     attributes:
       label: 提案する修正 (タイポの場合) (Suggested Correction (for typos))
       description: タイポの場合、具体的な修正案を記述してください。(If it's a typo, please provide the specific correction.)
-      placeholder: 例: 「ごじ」を「誤字」に修正
+      placeholder: 例「ごじ」を「誤字」に修正
     validations:
       required: false
 
