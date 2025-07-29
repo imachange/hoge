@@ -5,7 +5,6 @@ title: "[提案/Proposal]: 課題のタイトル (Issue Title)"
 labels:
   - "状態: 下書き (Status: Draft)"
   - "優先度: 中 (Priority: Medium)" # 初期値として中を設定 (Set to medium as initial value)
-assignees:
 
 body:
   - type: markdown
