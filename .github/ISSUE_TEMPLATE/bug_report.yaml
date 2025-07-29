@@ -5,7 +5,6 @@ title: "[不具合/タイポ/Bug/Typo]: 課題のタイトル (Issue Title)"
 labels:
   - "状態: 下書き (Status: Draft)"
   - "優先度: 中 (Priority: Medium)" # 初期値として中を設定 (Set to medium as initial value)
-assignees: # 必要に応じてデフォルトのアサインeeを設定 (Set default assignees as needed)
 
 body:
   - type: markdown
